@@ -1,8 +1,8 @@
+import logging
 from typing import TYPE_CHECKING, List, Optional, Tuple, Union
 
 import numpy as np
 import numpy.typing as npt
-
 import OpenGL.GL as GL
 from OpenGL import GLU
 
@@ -21,7 +21,8 @@ DEVICE_PIXEL_RATIO: Optional[
 def draw_points(
     points: Union[List[Point3D], npt.NDArray],
     color: Color4f = (0, 1, 1, 1),
-    point_size: int = 10,
+    point_size: int = 1,
+    #point_size: int = 10,
 ) -> None:
     GL.glColor4d(*color)
     GL.glPointSize(point_size)
@@ -32,9 +33,7 @@ def draw_points(
 
 
 def draw_lines(
-    points: List[Point3D],
-    color: Color4f = (0, 1, 1, 1),
-    line_width: int = 2,
+    points: List[Point3D], color: Color4f = (0, 1, 1, 1), line_width: int = 10
 ) -> None:
     GL.glColor4d(*color)
     GL.glLineWidth(line_width)
@@ -42,6 +41,8 @@ def draw_lines(
     for point in points:
         GL.glVertex3d(*point)
     GL.glEnd()
+
+
 
 
 def draw_triangles(vertices: List[Point3D], color: Color4f = (0, 1, 1, 1)) -> None:
@@ -54,7 +55,7 @@ def draw_triangles(vertices: List[Point3D], color: Color4f = (0, 1, 1, 1)) -> No
 
 def draw_rectangles(
     vertices: Union[List[Point3D], npt.NDArray],
-    color: Color4f = (0, 1, 1, 1),
+    color: Color4f = (0, 1, 1, 0.5),
     line_width: int = 2,
 ) -> None:
     GL.glColor4d(*color)
@@ -69,14 +70,17 @@ def draw_cuboid(
     vertices: Union[List[Point3D], npt.NDArray],
     color: Color4f = (1, 1, 0, 0.5),
     draw_vertices: bool = False,
-    vertex_color: Color4f = (0, 1, 1, 1),
+    vertex_color: Color4f = (0, 1, 1, 0.5),
 ) -> None:
+    #logging.info("ogl draw_cuboid") #계속그림
     # flatten side vertices
     side_vertices = [
         index for side_indices in BBOX_SIDES.values() for index in side_indices
     ]
     rectangle_vertices = np.array(vertices)[side_vertices]
-    draw_rectangles(rectangle_vertices, color=color)
+   #draw_rectangles(rectangle_vertices, color=color)
+    draw_rectangles(rectangle_vertices, color=vertex_color)
+     
     if draw_vertices:
         draw_points(vertices, color=vertex_color)
 
@@ -85,7 +89,8 @@ def draw_crosshair(
     cx: float, cy: float, cz: float, color: Color4f = (0, 1, 0, 1)
 ) -> None:
     GL.glBegin(GL.GL_LINES)
-    GL.glColor4d(*color)
+    #GL.glColor3d(*color)
+    GL.glColor4d(*color) # TypeError: this function takes 3 arguments (4 given)
     GL.glVertex3d(cx + 0.1, cy, cz)  # x-line
     GL.glVertex3d(cx - 0.1, cy, cz)
     GL.glVertex3d(cx, cy + 0.1, cz)  # y-line

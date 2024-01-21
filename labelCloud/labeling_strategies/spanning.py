@@ -21,21 +21,38 @@ class SpanningStrategy(BaseLabelingStrategy):
 
     def __init__(self, view: "GUI") -> None:
         super().__init__(view)
-        logging.info("Enabled spanning mode.")
+        #logging.info("Enabled spanning mode.")
         self.view.status_manager.update_status(
             "Begin by selecting a vertex of the bounding box.", mode=Mode.DRAWING
         )
         self.preview_color = (1, 1, 0, 1)
+        
         self.point_2: Optional[Point3D] = None  # second edge
         self.point_3: Optional[Point3D] = None  # width
         self.point_4: Optional[Point3D] = None  # height
+        
         self.tmp_p2: Optional[Point3D] = None  # tmp points for preview
         self.tmp_p3: Optional[Point3D] = None
         self.tmp_p4: Optional[Point3D] = None
+        
         self.p1_w: Optional[Point3D] = None  # p1 + dir_vector
         self.p2_w: Optional[Point3D] = None  # p2 + dir_vector
         self.dir_vector: Optional[Point3D] = None  # p1 + dir_vector
-
+        
+    
+    ##########################################
+    def save_copied_id(self, copied_id: float
+                       , length: float = None, width: float = None, height: float = None
+                       , x_rotation: float = None, y_rotation: float = None, z_rotation: float = None) -> None:
+        True
+        #logging.info(f" Spanning ")
+    ##########################################
+    
+    ##########################################
+    def get_strategy(self)->None:
+        return False
+    ##########################################
+    
     def reset(self) -> None:
         super().reset()
         self.point_2, self.point_3, self.point_4 = (None, None, None)

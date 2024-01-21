@@ -7,6 +7,7 @@ if TYPE_CHECKING:
 
 @dataclass
 class Perspective(object):
+    #logging.info("class Perspective...")
     translation: Tuple[float, float, float]
     rotation: Tuple[float, float, float]
 

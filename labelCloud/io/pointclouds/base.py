@@ -18,16 +18,12 @@ class BasePointCloudHandler(object, metaclass=SingletonABCMeta):
     @abstractmethod
     def read_point_cloud(self, path: Path) -> Tuple[np.ndarray, Optional[np.ndarray]]:  # type: ignore
         """Read a point cloud file and return only the points and colors as array."""
-        logging.info(
-            blue("Loading point cloud from %s using %s."), path, self.__class__.__name__
-        )
+        #logging.info(blue("Loading point cloud from %s using %s."), path, self.__class__.__name__)
         pass
 
     @abstractmethod
     def write_point_cloud(self, path: Path, pointcloud: "PointCloud") -> None:
-        logging.info(
-            blue("Writing point cloud to %s using %s."), path, self.__class__.__name__
-        )
+        #logging.info(blue("Writing point cloud to %s using %s."), path, self.__class__.__name__)
         pass
 
     @classmethod

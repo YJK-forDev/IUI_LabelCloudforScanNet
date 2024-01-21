@@ -1,51 +1,55 @@
 import logging
-from typing import List, Optional
+from typing import List
 
 import numpy as np
 import numpy.typing as npt
-
 import OpenGL.GL as GL
 
 from ..control.config_manager import config
-from ..definitions import (
-    BBOX_EDGES,
-    BBOX_SIDES,
-    Color3f,
-    Dimensions3D,
-    Point3D,
-    Rotations3D,
-)
-from ..io.labels.config import LabelConfig
+from ..definitions import BBOX_EDGES, BBOX_SIDES, Dimensions3D, Point3D, Rotations3D
 from ..utils import math3d, oglhelper
 
 
 class BBox(object):
-    MIN_DIMENSION: float = config.getfloat("LABEL", "MIN_BOUNDINGBOX_DIMENSION")
-    HIGHLIGHTED_COLOR: Color3f = Color3f(0, 1, 0)
+
+    MIN_DIMENSION = config.getfloat("LABEL", "MIN_BOUNDINGBOX_DIMENSION")
 
     def __init__(
         self,
         cx: float,
         cy: float,
         cz: float,
-        length: Optional[float] = None,
-        width: Optional[float] = None,
-        height: Optional[float] = None,
+        length: float = None,
+        width: float = None,
+        height: float = None,
     ) -> None:
         self.center: Point3D = (cx, cy, cz)
-        self.length: float = length or config.getfloat(
-            "LABEL", "STD_BOUNDINGBOX_LENGTH"
-        )
-        self.width: float = width or config.getfloat("LABEL", "STD_BOUNDINGBOX_WIDTH")
-        self.height: float = height or config.getfloat(
-            "LABEL", "STD_BOUNDINGBOX_HEIGHT"
-        )
+        
+        
+        #self.length: float = length or config.getfloat(
+        #    "LABEL", "STD_BOUNDINGBOX_LENGTH"
+        #)
+        #self.width: float = width or config.getfloat("LABEL", "STD_BOUNDINGBOX_WIDTH")
+        #self.height: float = height or config.getfloat(
+        #    "LABEL", "STD_BOUNDINGBOX_HEIGHT"
+        #)
+        
+        #std_boundingbox_length = 0.75
+        self.length: float = length or 0.06
+        #std_boundingbox_width = 0.55
+        self.width: float = width or 0.06
+        #std_boundingbox_height = 0.15
+        self.height: float = height or 0.06
         self.x_rotation: float = 0
         self.y_rotation: float = 0
         self.z_rotation: float = 0
-        self.classname: str = LabelConfig().get_default_class_name()
+        #self.classname: str = config.get("LABEL", "STD_OBJECT_CLASS")
+        self.classname: str = '+refrigerator'
         self.verticies: npt.NDArray = np.zeros((8, 3))
+        #self.verticies: npt.NDArray = np.zeros((1, 1))
+        
         self.set_axis_aligned_verticies()
+        self.color = (0, 0, 1, 1)
 
     # GETTERS
 
@@ -94,6 +98,7 @@ class BBox(object):
             self.classname = classname
 
     def set_length(self, length: float) -> None:
+        #logging.warning("set length??")
         if length > 0:
             self.length = length
         else:
@@ -162,9 +167,36 @@ class BBox(object):
         self.set_axis_aligned_verticies()
 
         GL.glPushMatrix()
-        bbox_color = LabelConfig().get_class_color(self.classname)
+        bbox_color = (0, 0, 0, 1) #초록색
+        
+        """
+        if self.classname == '냉장고' or self.classname=='refrigerator': 
+            bbox_color = (255, 0, 0, 0.5)
+        elif self.classname == '캐비넷' or self.classname=='cabinet':
+            bbox_color = (31, 119, 180, 0.5)
+        elif self.classname == '바닥' or self.classname=='floor':
+            bbox_color = (152, 223, 138, 0.5)
+        elif self.classname == '의자' or self.classname=='chair': 
+            bbox_color = (188, 189, 34, 0.5)
+        elif self.classname == '소파' or self.classname=='sofa':
+            bbox_color = (140, 86, 75, 0.5)
+        elif self.classname == '기본' or self.classname=='class0':
+            bbox_color = (0, 0, 1, 0.5)
+        else:
+            bbox_color = (0, 0, 1, 0.5)
+        """
+        
+        """
+        if '-' in self.classname:
+            #bbox_color = (1, 0, 1, 0.5)
+            bbox_color = (255, 0, 0, 0.5)
+        else :
+            bbox_color = (0, 0, 1, 0.5)
+            #bbox_color = (31, 81, 255, 1)
+        """
+        
         if highlighted:
-            bbox_color = self.HIGHLIGHTED_COLOR
+            bbox_color = (1, 0, 0, 1)
 
         vertices = self.get_vertices()
         drawing_sequence = []
@@ -172,7 +204,8 @@ class BBox(object):
             for vertex_id in edge:
                 drawing_sequence.append(vertices[vertex_id])
 
-        oglhelper.draw_lines(drawing_sequence, color=Color3f.to_rgba(bbox_color))
+        oglhelper.draw_lines(drawing_sequence, color=bbox_color)
+        #oglhelper.draw_cuboid(vertices, draw_vertices=True, vertex_color=bbox_color)
         GL.glPopMatrix()
 
     def draw_orientation(self, crossed_side: bool = True) -> None:
@@ -252,41 +285,3 @@ class BBox(object):
         if side == "bottom" and self.height + distance > BBox.MIN_DIMENSION:
             self.height += distance
             self.translate_side(0, 4, distance)
-
-    def is_inside(self, points: npt.NDArray[np.float32]) -> npt.NDArray[np.bool_]:
-        vertices = self.get_vertices().copy()
-
-        #        .------------.
-        #       /|           /|
-        #      / |          / |
-        # (p1).------------.  |
-        #     |  |         |  |
-        #     |  |         |  |
-        #     |  .(p2)_____|__.
-        #     | /          | /
-        #     ./___________./
-        #   (p0)           (p3)
-
-        p0 = vertices[0]
-        p1 = vertices[3]
-        p2 = vertices[1]
-        p3 = vertices[4]
-
-        # p0 as origin
-        v1 = p1 - p0
-        v2 = p2 - p0
-        v3 = p3 - p0
-
-        u = points - p0
-        u_dot_v1 = u.dot(v1)
-        u_dot_v2 = u.dot(v2)
-        u_dot_v3 = u.dot(v3)
-
-        inside_v1 = np.logical_and(np.sum(v1**2) > u_dot_v1, u_dot_v1 > 0)
-        inside_v2 = np.logical_and(np.sum(v2**2) > u_dot_v2, u_dot_v2 > 0)
-        inside_v3 = np.logical_and(np.sum(v3**2) > u_dot_v3, u_dot_v3 > 0)
-
-        points_inside: npt.NDArray[np.bool_] = np.logical_and(
-            np.logical_and(inside_v1, inside_v2), inside_v3
-        )
-        return points_inside

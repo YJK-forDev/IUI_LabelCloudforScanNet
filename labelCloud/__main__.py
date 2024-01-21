@@ -17,26 +17,77 @@ def main():
     parser.add_argument(
         "-v", "--version", action="version", version="%(prog)s " + __version__
     )
+    
+    
+    parser.add_argument(
+        "-i",
+        "--id",
+        action="store",
+        required=True,
+        help="Experiment id.",
+    )
+    parser.add_argument(
+        "-c",
+        "--condition",
+        action="store",
+        required=True,
+        help="Experiment condition.",
+    )
+    parser.add_argument(
+        "-pcd",
+        "--pcdname",
+        action="store",
+        required=False,
+        help="Experiment condition.",
+    )
+
+    parser.add_argument(
+        "-p",
+        "--perspective",
+        #action="append",
+        nargs='+',
+        required=False,
+        help="The Scene Perspective.",
+    )
+    parser.add_argument(
+        "-l",
+        "--label",
+        action="store",
+        required=False,
+        help="Labeling object.",
+    )
+    
+    
+    global args
     args = parser.parse_args()
+    # pers
+    pers = args.perspective
 
     if args.example:
         setup_example_project()
 
     start_gui()
+    
+    #return args
 
 
 def setup_example_project() -> None:
+    
     import shutil
     from pathlib import Path
 
     import pkg_resources
 
     from labelCloud.control.config_manager import config
+    
+    #logging.info("setup_example_project...")
 
+    """
     logging.info(
         "Starting labelCloud in example mode.\n"
         "Setting up project with example point cloud ,label and default config."
     )
+    """
     cwdir = Path().cwd()
 
     # Create folders
@@ -55,10 +106,6 @@ def setup_example_project() -> None:
             "labelCloud.resources.examples", "exemplary.ply"
         ),
         str(pcd_folder.joinpath("exemplary.ply")),
-    )
-    shutil.copy(
-        pkg_resources.resource_filename("labelCloud.resources", "default_classes.json"),
-        str(label_folder.joinpath("_classes.json")),
     )
     shutil.copy(
         pkg_resources.resource_filename(
@@ -81,9 +128,13 @@ def start_gui():
 
     from labelCloud.control.controller import Controller
     from labelCloud.view.gui import GUI
-
+    
+    #logging.info("start_gui...")
+    
     app = QApplication(sys.argv)
-
+    #logging.info(sys.argv)
+    
+    
     # Setup Model-View-Control structure
     control = Controller()
     view = GUI(control)
@@ -96,11 +147,11 @@ def start_gui():
 
     app.setStyle("Fusion")
     desktop = QDesktopWidget().availableGeometry()
-    width = (desktop.width() - view.width()) // 2
-    height = (desktop.height() - view.height()) // 2
+    width = (desktop.width() - view.width()) / 2
+    height = (desktop.height() - view.height()) / 2
     view.move(width, height)
 
-    logging.info("Showing GUI...")
+    #logging.info("Showing GUI...")
     sys.exit(app.exec_())
 
 

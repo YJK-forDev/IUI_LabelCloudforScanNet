@@ -9,7 +9,6 @@ from PyQt5.QtWidgets import QDialog
 
 from ..control.config_manager import config, config_manager
 from ..control.label_manager import LabelManager
-from ..io.labels.config import LabelConfig
 
 
 class SettingsDialog(QDialog):
@@ -49,14 +48,16 @@ class SettingsDialog(QDialog):
         )
 
         # Label
-        self.comboBox_labelformat.addItems(LabelConfig().type.get_available_formats())
-        self.comboBox_labelformat.setCurrentText(LabelConfig().format)
-
-        self.comboBox_defaultobjectclass.addItems(LabelConfig().get_classes().keys())
-        self.comboBox_defaultobjectclass.setCurrentText(
-            LabelConfig().get_default_class_name()
+        self.comboBox_labelformat.addItems(
+            LabelManager.LABEL_FORMATS
+        )  # TODO: Fix visualization
+        self.comboBox_labelformat.setCurrentText(config.get("LABEL", "label_format"))
+        self.plainTextEdit_objectclasses.setPlainText(
+            config.get("LABEL", "object_classes")
         )
-
+        self.lineEdit_standardobjectclass.setText(
+            config.get("LABEL", "std_object_class")
+        )
         self.spinBox_exportprecision.setValue(
             config.getint("LABEL", "export_precision")
         )
@@ -80,9 +81,6 @@ class SettingsDialog(QDialog):
         )
         self.doubleSpinBox_stdbboxscaling.setValue(
             config.getfloat("LABEL", "std_scaling")
-        )
-        self.checkBox_propagatelabels.setChecked(
-            config.getboolean("LABEL", "propagate_labels")
         )
 
         # User Interface
@@ -125,8 +123,11 @@ class SettingsDialog(QDialog):
         config["POINTCLOUD"]["std_zoom"] = str(self.doubleSpinBox_standardzoom.value())
 
         # Label
-        LabelConfig().set_label_format(self.comboBox_labelformat.currentText())
-        LabelConfig().set_default_class(self.comboBox_defaultobjectclass.currentText())
+        config["LABEL"]["label_format"] = self.comboBox_labelformat.currentText()
+        config["LABEL"][
+            "object_classes"
+        ] = self.plainTextEdit_objectclasses.toPlainText()
+        config["LABEL"]["std_object_class"] = self.lineEdit_standardobjectclass.text()
         config["LABEL"]["export_precision"] = str(self.spinBox_exportprecision.value())
         config["LABEL"]["min_boundingbox_dimension"] = str(
             self.doubleSpinBox_minbboxdimensions.value()
@@ -147,9 +148,6 @@ class SettingsDialog(QDialog):
             self.doubleSpinBox_stdbboxrotation.value()
         )
         config["LABEL"]["std_scaling"] = str(self.doubleSpinBox_stdbboxscaling.value())
-        config["LABEL"]["propagate_labels"] = str(
-            self.checkBox_propagatelabels.isChecked()
-        )
 
         # User Interface
         config["USER_INTERFACE"]["z_rotation_only"] = str(
@@ -177,14 +175,15 @@ class SettingsDialog(QDialog):
         config_manager.write_into_file()
         self.parent_gui.set_checkbox_states()
         self.parent_gui.controller.pcd_manager.label_manager = LabelManager(
-            strategy=LabelConfig().format,
+            strategy=config["LABEL"]["label_format"],
             path_to_label_folder=Path(config["FILE"]["label_folder"]),
         )
-        logging.info("Saved and activated new configuration!")
+        #logging.info("Saved and activated new configuration!")
 
     def reset(self) -> None:
         config_manager.reset_to_default()
         self.fill_with_current_settings()
 
     def chancel(self) -> None:
-        logging.info("Settings dialog was chanceled!")
+        True
+        #logging.info("Settings dialog was chanceled!")

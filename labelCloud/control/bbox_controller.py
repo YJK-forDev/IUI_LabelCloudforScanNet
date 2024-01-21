@@ -9,12 +9,15 @@ from functools import wraps
 from typing import TYPE_CHECKING, List, Optional
 
 import numpy as np
+import numpy.typing as npt
 
 from ..definitions import Mode
 from ..model.bbox import BBox
 from ..utils import oglhelper
 from .config_manager import config
-from .pcd_manager import PointCloudManger
+from ..utils.logger import end_section, green, print_column, red, start_section, yellow
+
+#from .pcd_manager import PointCloudManger
 
 if TYPE_CHECKING:
     from ..view.gui import GUI
@@ -44,10 +47,12 @@ def only_zrotation_decorator(func):
     def wrapper(*args, **kwargs):
         if not config.getboolean("USER_INTERFACE", "z_rotation_only"):
             return func(*args, **kwargs)
+    
         else:
             logging.warning(
                 "Rotations around the x- or y-axis are not supported in this mode."
             )
+            
 
     return wrapper
 
@@ -56,11 +61,63 @@ class BoundingBoxController(object):
     STD_SCALING = config.getfloat("LABEL", "std_scaling")
 
     def __init__(self) -> None:
+        #logging.info("bbox_controller.py BoundingBoxController init...")
         self.view: GUI
+        
+
+        ##########################################
+        from .pcd_manager import PointCloudManger
         self.pcd_manager: PointCloudManger
+        #self.pcd_points : self.pcd_manager.points
+        #logging.info(f"* self.pcd_points.. ({self.pcd_points}).")
+        #logging.info(f"* type.. ({type(self.pcd_points)}).")
+        ##########################################
+
+        
         self.bboxes: List[BBox] = []
         self.active_bbox_id = -1  # -1 means zero bboxes
 
+    
+    """
+    ###############################################    
+    def get_bboxes(self) -> npt.NDArray:
+        #print_column(["get_bboxes..!"])
+        
+        data = []
+        for bbox in self.bboxes:
+            #print_column(["** bbox:", bbox])
+            #bbox.get_vertices().tolist()
+            data.append(bbox.get_vertices().tolist())
+            
+        #logging.info(f"bbox 8 points ({data}).")
+        #logging.info(f"Get points in the bboxes.. ({type(data)}).")
+        
+        pointsInBBoxes = []
+        bbox_mins = []
+        bbox_maxs = []
+    
+    
+        for i in range(len(data)):        
+            #bbox_mins = npt.NDArray[np.float32] = np.amin(data, axis=0)
+            #bbox_maxs = npt.NDArray[np.float32] = np.amax(data, axis=0)
+            #logging.info(f"BBOX [i].. ({i}).")
+            bbox_min = np.amin(data[i], axis=0)
+            bbox_max = np.amax(data[i], axis=0)
+            #logging.info(f"BBOX MIN point.. ({bbox_min}).")
+            #logging.info(f"BBOX MAX point.. ({bbox_max}).")
+            bbox_mins.append(bbox_min) 
+            bbox_maxs.append(bbox_max)
+        
+        #logging.info(f"BBOX MIN points.. ({bbox_mins}).") #BBOX MIN points.. ([array([ 3.42841979,  5.87185131, -0.05789034]), array([ 5.0971608 ,
+        #logging.info(f"BBOX MAX points.. ({bbox_maxs}).")
+
+        #
+        
+        return (bbox_mins, bbox_maxs)
+    #################################################
+    """
+    
+    
     # GETTERS
     def has_active_bbox(self) -> bool:
         return 0 <= self.active_bbox_id < len(self.bboxes)
@@ -70,26 +127,127 @@ class BoundingBoxController(object):
             return self.bboxes[self.active_bbox_id]
         else:
             return None
-
+    
+    """
+    #################################################
+    def get_size_bbox(self) -> float:
+        if self.has_active_bbox():
+            return self.bboxes[self.active_bbox_id].length
+        else:
+            return None
+    #################################################
+    """
+    
+    """
+    def set_copied_bbox(self) -> Optional[BBox]:
+        if self.has_active_bbox():
+            return self.bboxes[self.active_bbox_id]
+        else:
+            return None
+    """
+    
     @has_active_bbox_decorator
     def get_classname(self) -> str:
         return self.get_active_bbox().get_classname()  # type: ignore
 
     # SETTERS
-
+    
     def set_view(self, view: "GUI") -> None:
         self.view = view
+    
+    """
+    ###################################################
+    def change_bbox(self, bbox: BBox) -> None:
+        
+        logging.info(f"Change ctrl+c ?.. ({}).") # True False GOOD
 
-    def add_bbox(self, bbox: BBox) -> None:
+        bbox.classname = 'test'
+        bbox.color = (1, 0, 1, 0.5)
+        bbox.length = 3
+        bbox.width = 3
+        bbox.height = 3
+        
         if isinstance(bbox, BBox):
+            
             self.bboxes.append(bbox)
             self.set_active_bbox(self.bboxes.index(bbox))
-            self.view.current_class_dropdown.setCurrentText(
-                self.get_active_bbox().classname  # type: ignore
-            )
             self.view.status_manager.update_status(
                 "Bounding Box added, it can now be corrected.", Mode.CORRECTION
             )
+            #logging.info(self.get_bboxes()) #8개xbox갯수 (x,x,x)
+    ###################################################       
+    """
+    
+    
+    def add_bbox(self, bbox: BBox, Right: bool, className:str) -> None:
+        
+        #logging.info(f"Right?.. ({Right}).") # True False GOOD
+        
+        logging.info(f"({className}).") # True False GOOD
+        
+        """
+        #bbox.py로 가시오
+        if className == '냉장고' or className=='refrigerator': 
+            bbox.color = (0, 0, 0, 0.5)
+        elif className == '캐비넷' or className=='cabinet':
+            bbox.color = (1, 1, 1, 0.5)
+        elif className == '바닥' or className=='floor':
+            bbox.color = (1, 1, 1, 0.5)
+        elif className == '의자' or className=='chair': 
+            bbox.color = (1, 1, 1, 0.5)
+        elif className == '소파' or className=='sofa':
+            bbox.color = (1, 1, 1, 0.5)
+        elif className == '기본' or className=='class0':
+            bbox.color = (1, 1, 1, 0.5)
+        """
+        
+        
+        bbox.classname = className
+        """
+        if(Right):
+            #bbox.classname = '-refrigerator'
+            bbox.classname = '-'+className
+            bbox.color = (1, 0, 1, 0.5)
+        else:
+            #bbox.classname = '-refrigerator'
+            bbox.classname = '+'+className
+        """ 
+        
+        """
+        if className == '냉장고': 
+            bbox.length = 1
+            bbox.width = 0.25
+            bbox.height = 1.6
+        elif className == '캐비넷': 
+            bbox.length = 0.8
+            bbox.width = 0.5
+            bbox.height = 0.8
+        elif className == '바닥': 
+            bbox.length = 2.5
+            bbox.width = 2
+            bbox.height = 0.15
+        elif className == '의자': 
+            bbox.length = 0.5
+            bbox.width = 0.5
+            bbox.height = 1
+        elif className == '소파': 
+            bbox.length = 1
+            bbox.width = 2
+            bbox.height = 1
+        elif className == '기본': 
+            bbox.length = 0.1
+            bbox.width = 0.1
+            bbox.height = 0.1
+        """
+        
+        if isinstance(bbox, BBox):
+            
+            self.bboxes.append(bbox)
+            self.set_active_bbox(self.bboxes.index(bbox))
+            self.view.status_manager.update_status(
+                "Bounding Box added, it can now be corrected.", Mode.CORRECTION
+            )
+            #logging.info(self.get_bboxes()) #8개xbox갯수 (x,x,x)
 
     def update_bbox(self, bbox_id: int, bbox: BBox) -> None:
         if isinstance(bbox, BBox) and (0 <= bbox_id < len(self.bboxes)):
@@ -117,6 +275,7 @@ class BoundingBoxController(object):
             )
         else:
             self.deselect_bbox()
+    ###################################################
 
     @has_active_bbox_decorator
     def set_classname(self, new_class: str) -> None:
@@ -152,7 +311,19 @@ class BoundingBoxController(object):
             self.get_active_bbox().set_z_translation(value)  # type: ignore
         else:
             raise Exception("Wrong axis describtion.")
-
+    
+    #################################################
+    @has_active_bbox_decorator
+    def copied_bbox(self, value: float) -> None:
+        #logging.info("copied bbox??!")
+        #if dimension == "length":
+        self.get_active_bbox().set_length(value)  # type: ignore
+        #elif dimension == "width":
+        self.get_active_bbox().set_width(value)  # type: ignore
+        #elif dimension == "height":
+        self.get_active_bbox().set_height(value)  # type: ignore
+    #################################################
+    
     @has_active_bbox_decorator
     def update_dimension(self, dimension: str, value: float) -> None:
         if dimension == "length":
@@ -163,7 +334,7 @@ class BoundingBoxController(object):
             self.get_active_bbox().set_height(value)  # type: ignore
         else:
             raise Exception("Wrong dimension describtion.")
-
+   
     @has_active_bbox_decorator
     def update_rotation(self, axis: str, value: float) -> None:
         if axis == "rot_x":
@@ -177,9 +348,7 @@ class BoundingBoxController(object):
 
     @only_zrotation_decorator
     @has_active_bbox_decorator
-    def rotate_around_x(
-        self, dangle: Optional[float] = None, clockwise: bool = False
-    ) -> None:
+    def rotate_around_x(self, dangle: float = None, clockwise: bool = False) -> None:
         dangle = dangle or config.getfloat("LABEL", "std_rotation")
         if clockwise:
             dangle *= -1
@@ -189,9 +358,7 @@ class BoundingBoxController(object):
 
     @only_zrotation_decorator
     @has_active_bbox_decorator
-    def rotate_around_y(
-        self, dangle: Optional[float] = None, clockwise: bool = False
-    ) -> None:
+    def rotate_around_y(self, dangle: float = None, clockwise: bool = False) -> None:
         dangle = dangle or config.getfloat("LABEL", "std_rotation")
         if clockwise:
             dangle *= -1
@@ -201,10 +368,7 @@ class BoundingBoxController(object):
 
     @has_active_bbox_decorator
     def rotate_around_z(
-        self,
-        dangle: Optional[float] = None,
-        clockwise: bool = False,
-        absolute: bool = False,
+        self, dangle: float = None, clockwise: bool = False, absolute: bool = False
     ) -> None:
         dangle = dangle or config.getfloat("LABEL", "std_rotation")
         if clockwise:
@@ -235,9 +399,7 @@ class BoundingBoxController(object):
         self.rotate_around_z(x_angle)
 
     @has_active_bbox_decorator
-    def translate_along_x(
-        self, distance: Optional[float] = None, left: bool = False
-    ) -> None:
+    def translate_along_x(self, distance: float = None, left: bool = False) -> None:
         distance = distance or config.getfloat("LABEL", "std_translation")
         if left:
             distance *= -1
@@ -249,9 +411,7 @@ class BoundingBoxController(object):
         active_bbox.set_y_translation(active_bbox.center[1] + distance * sinz)
 
     @has_active_bbox_decorator
-    def translate_along_y(
-        self, distance: Optional[float] = None, forward: bool = False
-    ) -> None:
+    def translate_along_y(self, distance: float = None, forward: bool = False) -> None:
         distance = distance or config.getfloat("LABEL", "std_translation")
         if forward:
             distance *= -1
@@ -263,9 +423,7 @@ class BoundingBoxController(object):
         active_bbox.set_y_translation(active_bbox.center[1] + distance * bu * cosz)
 
     @has_active_bbox_decorator
-    def translate_along_z(
-        self, distance: Optional[float] = None, down: bool = False
-    ) -> None:
+    def translate_along_z(self, distance: float = None, down: bool = False) -> None:
         distance = distance or config.getfloat("LABEL", "std_translation")
         if down:
             distance *= -1
@@ -274,9 +432,7 @@ class BoundingBoxController(object):
         active_bbox.set_z_translation(active_bbox.center[2] + distance)
 
     @has_active_bbox_decorator
-    def scale(
-        self, length_increase: Optional[float] = None, decrease: bool = False
-    ) -> None:
+    def scale(self, length_increase: float = None, decrease: bool = False) -> None:
         """Scales a bounding box while keeping the previous aspect ratio.
 
         :param length_increase: factor by which the length should be increased
@@ -306,7 +462,7 @@ class BoundingBoxController(object):
         )
         if intersected_bbox_id is not None:
             self.set_active_bbox(intersected_bbox_id)
-            logging.info("Selected bounding box %s." % intersected_bbox_id)
+            #logging.info("Selected bounding box %s." % intersected_bbox_id)
 
     # HELPER
 
@@ -324,11 +480,9 @@ class BoundingBoxController(object):
 
     def update_curr_class(self) -> None:
         if self.has_active_bbox():
-            self.view.current_class_dropdown.setCurrentText(
-                self.get_active_bbox().classname  # type: ignore
-            )
+            self.view.update_curr_class_edit()
         else:
-            self.view.controller.pcd_manager.populate_class_dropdown()
+            self.view.update_curr_class_edit(force="")
 
     def update_label_list(self) -> None:
         """Updates the list of drawn labels and highlights the active label.
@@ -346,10 +500,3 @@ class BoundingBoxController(object):
             if current_item:
                 current_item.setSelected(True)
         self.view.label_list.blockSignals(False)
-
-    def assign_point_label_in_active_box(self) -> None:
-        box = self.get_active_bbox()
-        if box is not None:
-            self.pcd_manager.assign_point_label_in_box(box)
-            if config.getboolean("USER_INTERFACE", "delete_box_after_assign"):
-                self.delete_current_bbox()

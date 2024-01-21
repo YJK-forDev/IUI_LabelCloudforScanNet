@@ -1,29 +1,20 @@
 import logging
-from contextlib import contextmanager
 from typing import Optional, Tuple, Union
+
+from PyQt5 import QtGui, QtOpenGL
 
 import numpy as np
 import numpy.typing as npt
 import OpenGL.GL as GL
 from OpenGL import GLU
-from PyQt5 import QtGui, QtOpenGL
 
 from ..control.alignmode import AlignMode
 from ..control.bbox_controller import BoundingBoxController
 from ..control.config_manager import config
 from ..control.drawing_manager import DrawingManager
 from ..control.pcd_manager import PointCloudManger
-from ..definitions.types import Color4f, Point2D
+from ..definitions.types import Color4f, Point2D, Point3D
 from ..utils import oglhelper
-
-
-@contextmanager
-def ignore_depth_mask():
-    GL.glDepthMask(GL.GL_FALSE)
-    try:
-        yield
-    finally:
-        GL.glDepthMask(GL.GL_TRUE)
 
 
 # Main widget for presenting the point cloud
@@ -32,6 +23,8 @@ class GLWidget(QtOpenGL.QGLWidget):
     FAR_PLANE = config.getfloat("USER_INTERFACE", "far_plane")
 
     def __init__(self, parent=None) -> None:
+        
+        #logging.info("GLWidget init...")
         QtOpenGL.QGLWidget.__init__(self, parent)
         self.setMouseTracking(
             True
@@ -46,14 +39,14 @@ class GLWidget(QtOpenGL.QGLWidget):
             self.DEVICE_PIXEL_RATIO
         )  # set for helper functions
 
-        self.pcd_manager: PointCloudManger = None  # type: ignore
-        self.bbox_controller: BoundingBoxController = None  # type: ignore
+        self.pcd_manager: Optional[PointCloudManger] = None
+        self.bbox_controller: Optional[BoundingBoxController] = None
 
         # Objects to be drawn
         self.crosshair_pos: Point2D = (0, 0)
         self.crosshair_col: Color4f = (0, 1, 0, 1)
         self.selected_side_vertices: npt.NDArray = np.array([])
-        self.drawing_mode: DrawingManager = None  # type: ignore
+        self.drawing_mode: Union[DrawingManager, None] = None
         self.align_mode: Union[AlignMode, None] = None
 
     def set_pointcloud_controller(self, pcd_manager: PointCloudManger) -> None:
@@ -65,21 +58,24 @@ class GLWidget(QtOpenGL.QGLWidget):
     # QGLWIDGET METHODS
 
     def initializeGL(self) -> None:
-        bg_color = [
-            int(fl_color)
-            for fl_color in config.getlist("USER_INTERFACE", "BACKGROUND_COLOR")
-        ]  # floats to ints
+        #logging.info("viewer.py initializeGL...")
+        # bg_color = [
+        #     int(fl_color)
+        #     for fl_color in config.getlist("USER_INTERFACE", "BACKGROUND_COLOR")
+        # ]  # floats to ints
+        #bg_color = [200,200,200]
+        bg_color = [255,255,255]
         self.qglClearColor(QtGui.QColor(*bg_color))  # screen background color
         GL.glEnable(GL.GL_DEPTH_TEST)  # for visualization of depth
         GL.glEnable(GL.GL_BLEND)  # enable transparency
         GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA)
-        logging.info("Intialized widget.")
+        #logging.info("Intialized widget.")
 
         # Must be written again, due to buffer clearing
-        self.pcd_manager.pointcloud.create_buffers()  # type: ignore
+        self.pcd_manager.pointcloud.write_vbo()  # type: ignore
 
     def resizeGL(self, width, height) -> None:
-        logging.info("Resized widget.")
+        #logging.info("Resized widget.")
         GL.glViewport(0, 0, width, height)
         GL.glMatrixMode(GL.GL_PROJECTION)
         GL.glLoadIdentity()
@@ -89,43 +85,56 @@ class GLWidget(QtOpenGL.QGLWidget):
         GL.glMatrixMode(GL.GL_MODELVIEW)
 
     def paintGL(self) -> None:
+        
+        #logging.info("viewer.py paintGL...")
         GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT)
         GL.glPushMatrix()  # push the current matrix to the current stack
 
+        #################################################################
+        #logging.info(f"** paintGL get_bboxes(): ({self.bbox_controller.get_bboxes()}).") # GOOD
+        #bbox_mins, bbox_maxs = self.bbox_controller.get_bboxes()
+        #logging.info(f"** paintGL bbox_mins, bbox_maxs: ({bbox_mins, bbox_maxs}).") # GOOD
+        #################################################################          
+
         # Draw point cloud
         self.pcd_manager.pointcloud.draw_pointcloud()  # type: ignore
+        #self.pcd_manager.pointcloud.draw_pointcloud2(bbox_mins, bbox_maxs)  # type: ignore
 
+        
         # Get actual matrices for click unprojection
         self.modelview = GL.glGetDoublev(GL.GL_MODELVIEW_MATRIX)
         self.projection = GL.glGetDoublev(GL.GL_PROJECTION_MATRIX)
 
-        with ignore_depth_mask():  # Do not write decoration and preview elements in depth buffer
-            if config.getboolean("USER_INTERFACE", "show_floor"):
-                oglhelper.draw_xy_plane(self.pcd_manager.pointcloud)  # type: ignore
+        # Do not write decoration and preview elements in depth buffer
+        GL.glDepthMask(GL.GL_FALSE)
 
-            # Draw crosshair/ cursor in 3D world
-            if self.crosshair_pos:
-                cx, cy, cz = self.get_world_coords(*self.crosshair_pos, correction=True)
-                oglhelper.draw_crosshair(cx, cy, cz, color=self.crosshair_col)
+        
+        # if config.getboolean("USER_INTERFACE", "show_floor"):
+        #     oglhelper.draw_xy_plane(self.pcd_manager.pointcloud)  # type: ignore
 
-            if self.drawing_mode.has_preview():
-                self.drawing_mode.draw_preview()
+        # Draw crosshair/ cursor in 3D world
+        if self.crosshair_pos:
+            cx, cy, cz = self.get_world_coords(*self.crosshair_pos, correction=True)  # type: ignore
+            oglhelper.draw_crosshair(cx, cy, cz, color=self.crosshair_col)
 
-            if self.align_mode is not None:
-                if self.align_mode.is_active:
-                    self.align_mode.draw_preview()
+        if self.drawing_mode.has_preview():  # type: ignore
+            self.drawing_mode.draw_preview()  # type: ignore
 
-            # Highlight selected side with filled rectangle
-            if len(self.selected_side_vertices) == 4:
-                oglhelper.draw_rectangles(
-                    self.selected_side_vertices, color=(0, 1, 0, 0.3)
-                )
+        if self.align_mode is not None:
+            if self.align_mode.is_active:
+                self.align_mode.draw_preview()
+
+        # Highlight selected side with filled rectangle
+        if len(self.selected_side_vertices) == 4:
+            oglhelper.draw_rectangles(self.selected_side_vertices, color=(1, 0, 0, 0.3))
+
+        GL.glDepthMask(GL.GL_TRUE)
 
         # Draw active bbox
-        if self.bbox_controller.has_active_bbox():
+        if self.bbox_controller.has_active_bbox():  # type: ignore
             self.bbox_controller.get_active_bbox().draw_bbox(highlighted=True)  # type: ignore
-            if config.getboolean("USER_INTERFACE", "show_orientation"):
-                self.bbox_controller.get_active_bbox().draw_orientation()  # type: ignore
+            # if config.getboolean("USER_INTERFACE", "show_orientation"):
+            #     self.bbox_controller.get_active_bbox().draw_orientation()  # type: ignore
 
         # Draw labeled bboxes
         for bbox in self.bbox_controller.bboxes:  # type: ignore
@@ -135,7 +144,7 @@ class GLWidget(QtOpenGL.QGLWidget):
 
     # Translates the 2D cursor position from screen plane into 3D world space coordinates
     def get_world_coords(
-        self, x: float, y: float, z: Optional[float] = None, correction: bool = False
+        self, x: float, y: float, z: float = None, correction: bool = False
     ) -> Tuple[float, float, float]:
         x *= self.DEVICE_PIXEL_RATIO  # For fixing mac retina bug
         y *= self.DEVICE_PIXEL_RATIO

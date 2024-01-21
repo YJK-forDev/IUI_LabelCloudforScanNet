@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>MainWindow</class>
+ 
  <widget class="QMainWindow" name="MainWindow">
+  
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -17,6 +19,7 @@
    <iconset>
     <normaloff>../icons/labelCloud.ico</normaloff>../icons/labelCloud.ico</iconset>
   </property>
+  
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
@@ -30,6 +33,8 @@
       <property name="rightMargin">
        <number>0</number>
       </property>
+      
+
       <item alignment="Qt::AlignHCenter">
        <widget class="QLabel" name="icon_label">
         <property name="maximumSize">
@@ -55,6 +60,40 @@
         </property>
        </widget>
       </item>
+
+<!--
+      <item alignment="Qt::AlignHCenter">
+       <widget class="QLabel" name="icon_label">
+        <property name="maximumSize">
+         <size>
+          <width>230</width>
+          <height>115</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>DejaVu Sans,Arial</family>
+          <pointsize>16</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>GROUP A</string>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="indent">
+         <number>0</number>
+        </property>
+       </widget>
+      </item>
+-->      
+
       <item>
        <widget class="QFrame" name="frame_pcd">
         <property name="minimumSize">
@@ -86,9 +125,13 @@
              <bold>false</bold>
             </font>
            </property>
+           
+
            <property name="text">
             <string>Point Cloud</string>
            </property>
+
+
            <property name="alignment">
             <set>Qt::AlignCenter</set>
            </property>
@@ -128,6 +171,9 @@
            </property>
           </widget>
          </item>
+
+
+
          <item>
           <widget class="QProgressBar" name="progressbar_pcds">
            <property name="sizePolicy">
@@ -208,23 +254,687 @@
         </layout>
        </widget>
       </item>
-      <item>
+
+<!-- 라벨종류 시작 -->
+ 	  <item>
+       <widget class="QFrame" name="frame">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>230</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Sunken</enum>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <item>
+          <widget class="QLabel" name="current_label_title">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>12</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           	           <property name="toolTip">
+	            <string></string>
+	           </property>
+	           <property name="text">
+	            <string>Labels</string>
+	           </property>
+          </widget>
+         </item>
+
+         
+
+         <item>
+          
+          <layout class="QGridLayout" name="bbox_parameter_grid" rowminimumheight="0,0,0,0" columnminimumwidth="0,0,0">
+
+           <item row="0" column="0">
+	          <widget class="QPushButton" name="button_class1">
+	           <property name="sizePolicy">
+	            <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+	             <horstretch>0</horstretch>
+	             <verstretch>0</verstretch>
+	            </sizepolicy>
+	           </property>
+	           <property name="minimumSize">
+	            <size>
+	             <width>0</width>
+	             <height>40</height>
+	            </size>
+	           </property>
+	           	           	           <property name="styleSheet">
+
+              	<string >background-color: hsl(120,45%,35%);</string>
+              	<!-- <string >background-color: hsl(120,24.9%,40.2%);</string> -->
+             	</property>
+	           <property name="font">
+	            <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>12</pointsize>
+	             <weight>75</weight>
+	             <bold>true</bold>
+	            </font>소파
+
+
+	           </property>
+	           <property name="toolTip">
+	            <string>Class1</string>
+	           </property>
+	           <property name="text">
+	            <string>floor</string>
+	           </property>
+	           <property name="autoRepeat">
+	            <bool>true</bool>
+	           </property>
+	          </widget>
+	       </item>
+           
+
+            <item row="0" column="1">
+	          <widget class="QPushButton" name="button_class2">
+	           <property name="sizePolicy">
+	            <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+	             <horstretch>0</horstretch>
+	             <verstretch>0</verstretch>
+	            </sizepolicy>
+	           </property>
+	           <property name="minimumSize">
+	            <size>
+	             <width>0</width>
+	             <height>40</height>
+	            </size>
+	           </property>
+	           	           <property name="styleSheet">
+              	<string >background-color: hsl(50,58%,48%);</string>
+             	</property>
+	           <property name="font">
+	            <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>12</pointsize>
+	             <weight>75</weight>
+	             <bold>true</bold>
+	            </font>
+	           </property>
+	           <property name="toolTip">
+	            <string>class2</string>
+	           </property>
+	           <property name="text">
+	            <string>wall</string>
+	           </property>
+	           <property name="autoRepeat">
+	            <bool>true</bool>
+	           </property>
+	          </widget>
+	       </item>
+           <item row="0" column="2">
+	          <widget class="QPushButton" name="button_class3">
+	           <property name="sizePolicy">
+	            <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+	             <horstretch>0</horstretch>
+	             <verstretch>0</verstretch>
+	            </sizepolicy>
+	           </property>
+	           <property name="minimumSize">
+	            <size>
+	             <width>0</width>
+	             <height>40</height>
+	            </size>
+	           </property>
+	           	           	           <property name="styleSheet">
+              	<string >background-color: hsl(24,24.9%,40.2%);</string>
+             	</property>
+	           <property name="font">
+	            <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>12</pointsize>
+	             <weight>75</weight>
+	             <bold>true</bold>
+	            </font>
+	           </property>
+	           <property name="toolTip">
+	            <string>class3</string>
+	           </property>
+	           <property name="text">
+	            <string>door</string>
+	           </property>
+	           <property name="autoRepeat">
+	            <bool>true</bool>
+	           </property>
+	          </widget>
+	       </item>
+
+	       <item row="1" column="0">
+	          <widget class="QPushButton" name="button_class4">
+	           <property name="sizePolicy">
+	            <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+	             <horstretch>0</horstretch>
+	             <verstretch>0</verstretch>
+	            </sizepolicy>
+	           </property>
+	           <property name="minimumSize">
+	            <size>
+	             <width>0</width>
+	             <height>40</height>
+	            </size>
+	           </property>
+	           	           	           	           <property name="styleSheet">
+
+              	<string >background-color: hsl(263,24.9%,40.2%);</string>
+             	</property>
+	           <property name="font">
+	            <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>12</pointsize>
+	             <weight>75</weight>
+	             <bold>true</bold>
+	            </font>
+	           </property>
+	           <property name="toolTip">
+	            <string>class4</string>
+	           </property>
+	           <property name="text">
+	            <string>chair</string>
+	           </property>
+	           <property name="autoRepeat">
+	            <bool>true</bool>
+	           </property>
+	          </widget>
+	       </item>
+
+	       	       <item row="1" column="1">
+	          <widget class="QPushButton" name="button_class5">
+	           <property name="sizePolicy">
+	            <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+	             <horstretch>0</horstretch>
+	             <verstretch>1</verstretch>
+	            </sizepolicy>
+	           </property>
+	           <property name="minimumSize">
+	            <size>
+	             <width>0</width>
+	             <height>40</height>
+	            </size>
+	           </property>
+	           	           	           <property name="styleSheet">
+              	<string >background-color: hsl(60,34.9%,45.2%);</string>
+             	</property>
+	           <property name="font">
+	            <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>12</pointsize>
+	             <weight>75</weight>
+	             <bold>true</bold>
+	            </font>
+	           </property>
+	           <property name="toolTip">
+	            <string>class5</string>
+	           </property>
+	           <property name="text">
+	            <string>sofa</string>
+	           </property>
+	           <property name="autoRepeat">
+	            <bool>true</bool>
+	           </property>
+	          </widget>
+	       </item>
+	       <item row="1" column="2">
+	          <widget class="QPushButton" name="button_class6">
+	           <property name="sizePolicy">
+	            <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+	             <horstretch>0</horstretch>
+	             <verstretch>0</verstretch>
+	            </sizepolicy>
+	           </property>
+	           <property name="minimumSize">
+	            <size>
+	             <width>0</width>
+	             <height>40</height>
+	            </size>
+	           </property>
+	           	           <property name="styleSheet">
+              	<string >background-color: hsl(186,45%,40%);</string>
+             	</property>
+	           <property name="font">
+	            <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>12</pointsize>
+	             <weight>75</weight>
+	             <bold>true</bold>
+	            </font>
+	           </property>
+	           <property name="toolTip">
+	            <string>class6</string>
+	           </property>
+	           <property name="text">
+	            <string>table</string>
+	           </property>
+	           <property name="autoRepeat">
+	            <bool>true</bool>
+	           </property>
+	          </widget>
+	       </item>
+	       	       <item row="2" column="0">
+	          <widget class="QPushButton" name="button_class7">
+	           <property name="sizePolicy">
+	            <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+	             <horstretch>0</horstretch>
+	             <verstretch>0</verstretch>
+	            </sizepolicy>
+	           </property>
+	           <property name="minimumSize">
+	            <size>
+	             <width>0</width>
+	             <height>40</height>
+	            </size>
+	           </property>
+	           <property name="styleSheet">
+              	<string >background-color: hsl(331,39.9%,40.2%);</string>
+             	</property> 
+	           <property name="font">
+	            <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>12</pointsize>
+	             <weight>75</weight>
+	             <bold>true</bold>
+	            </font>
+	           </property>
+	           <property name="toolTip">
+	            <string>class7</string>
+	           </property>
+	           <property name="text">
+	            <string>cabinet</string>
+	           </property>
+	           <property name="autoRepeat">
+	            <bool>true</bool>
+	           </property>
+	          </widget>
+	       </item>       
+	       	       <item row="2" column="1">
+	          <widget class="QPushButton" name="button_class8">
+	           <property name="sizePolicy">
+	            <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+	             <horstretch>0</horstretch>
+	             <verstretch>0</verstretch>
+	            </sizepolicy>
+	           </property>
+	           <property name="minimumSize">
+	            <size>
+	             <width>0</width>
+	             <height>40</height>
+	            </size>
+	           </property>
+	          <property name="styleSheet">
+              	<string >background-color: hsl(60,95.5%,26.1%);</string>
+             	</property>
+	           <property name="font">
+	            <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>12</pointsize>
+	             <weight>75</weight>
+	             <bold>true</bold>
+	            </font>
+	           </property>
+	           <property name="toolTip">
+	            <string>class8</string>
+	           </property>
+	           <property name="text">
+	            <string>counter</string>
+	           </property>
+	           <property name="autoRepeat">
+	            <bool>true</bool>
+	           </property>
+	          </widget>
+	       </item>  
+	       	       <item row="2" column="2">
+	          <widget class="QPushButton" name="button_class9">
+	           <property name="sizePolicy">
+	            <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+	             <horstretch>0</horstretch>
+	             <verstretch>0</verstretch>
+	            </sizepolicy>
+	           </property>
+	           <property name="minimumSize">
+	            <size>
+	             <width>0</width>
+	             <height>40</height>
+	            </size>
+	           </property>
+	           	           <property name="styleSheet">
+              	<string >background-color: hsl(0,39.9%,40.2%);</string>
+             	</property>
+	           <property name="font">
+	            <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>12</pointsize>
+	             <weight>75</weight>
+	             <bold>true</bold>
+	            </font>
+	           </property>
+	           <property name="toolTip">
+	            <string>class69</string>
+	           </property>
+	           <property name="text">
+	            <string>refrigerator</string>
+	           </property>
+	           <property name="autoRepeat">
+	            <bool>true</bool>
+	           </property>
+	          </widget>
+	       </item>  
+	       	       <item row="3" column="0">
+	          <widget class="QPushButton" name="button_class10">
+	           <property name="sizePolicy">
+	            <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+	             <horstretch>0</horstretch>
+	             <verstretch>0</verstretch>
+	            </sizepolicy>
+	           </property>
+	           <property name="minimumSize">
+	            <size>
+	             <width>0</width>
+	             <height>40</height>
+	            </size>
+	           </property>
+	           	           	           <property name="styleSheet">
+              	<string >background-color: hsl(239,38.3%,29.1%);</string>
+             	</property>
+	           <property name="font">
+	            <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>12</pointsize>
+	             <weight>75</weight>
+	             <bold>true</bold>
+	            </font>
+	           </property>
+	           <property name="toolTip">
+	            <string>class10</string>
+	           </property>
+	           <property name="text">
+	            <string>window</string>
+	           </property>
+	           <property name="autoRepeat">
+	            <bool>true</bool>
+	           </property>
+	          </widget>
+	       </item>  
+	       	       <item row="3" column="1">
+	          <widget class="QPushButton" name="button_class11">
+	           <property name="sizePolicy">
+	            <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+	             <horstretch>0</horstretch>
+	             <verstretch>0</verstretch>
+	            </sizepolicy>
+	           </property>
+	           <property name="minimumSize">
+	            <size>
+	             <width>0</width>
+	             <height>40</height>
+	            </size>
+	           </property>
+	           	           	           <property name="styleSheet">
+              	<string >background-color: hsl(200,10%,50%);</string>
+             	</property>
+	           <property name="font">
+	            <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>12</pointsize>
+	             <weight>75</weight>
+	             <bold>true</bold>
+	            </font>
+	           </property>
+	           <property name="toolTip">
+	            <string>class11</string>
+	           </property>
+	           <property name="text">
+	            <string>sink</string>
+	           </property>
+	           <property name="autoRepeat">
+	            <bool>true</bool>
+	           </property>
+	          </widget>
+	       </item>  
+	       	       <item row="3" column="2">
+	          <widget class="QPushButton" name="button_class12">
+	           <property name="sizePolicy">
+	            <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+	             <horstretch>0</horstretch>
+	             <verstretch>0</verstretch>
+	            </sizepolicy>
+	           </property>
+	           <property name="minimumSize">
+	            <size>
+	             <width>0</width>
+	             <height>40</height>
+	            </size>
+	           </property>
+	           <property name="font">
+	            <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>12</pointsize>
+	             <weight>75</weight>
+	             <bold>true</bold>
+	            </font>
+	           </property>
+	           <property name="toolTip">
+	            <string>class12</string>
+	           </property>
+	           <property name="text">
+	            <string>other</string>
+	           </property>
+	           <property name="autoRepeat">
+	            <bool>true</bool>
+	           </property>
+	          </widget>
+	       </item>  
+
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+<!-- 라벨종류 끝 -->
+
+<!-- 박스생성 시작 -->
+ 	  <item>
+       <widget class="QFrame" name="frame">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>230</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Sunken</enum>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <item>
+          <widget class="QLabel" name="current_label_title">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>12</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           	           <property name="toolTip">
+	            <string></string>
+	           </property>
+	           <property name="text">
+	            <string>Choose the box size</string>
+	           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QGridLayout" name="bbox_parameter_grid" rowminimumheight="0" columnminimumwidth="0,0,0">
+           <item row="0" column="0">
+	          <widget class="QPushButton" name="button_pick_bbox_small">
+	           <property name="sizePolicy">
+	            <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+	             <horstretch>0</horstretch>
+	             <verstretch>0</verstretch>
+	            </sizepolicy>
+	           </property>
+	           <property name="minimumSize">
+	            <size>
+	             <width>0</width>
+	             <height>40</height>
+	            </size>
+	           </property>
+	           <property name="font">
+	            <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>10</pointsize>
+	             <weight>75</weight>
+	             <bold>true</bold>
+	            </font>
+	           </property>
+	           <property name="toolTip">
+	            <string>w작은 박스 생성</string>
+	           </property>
+	           <property name="text">
+	            <string>Small</string>
+	           </property>
+	           <property name="autoRepeat">
+	            <bool>true</bool>
+	           </property>
+	          </widget>
+	       </item>
+            <item row="0" column="1">
+	          <widget class="QPushButton" name="button_pick_bbox_mid">
+	           <property name="sizePolicy">
+	            <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+	             <horstretch>0</horstretch>
+	             <verstretch>0</verstretch>
+	            </sizepolicy>
+	           </property>
+	           <property name="minimumSize">
+	            <size>
+	             <width>0</width>
+	             <height>40</height>
+	            </size>
+	           </property>
+	           <property name="font">
+	            <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>10</pointsize>
+	             <weight>75</weight>
+	             <bold>true</bold>
+	            </font>
+	           </property>
+	           <property name="toolTip">
+	            <string>중간 박스 생성</string>
+	           </property>
+	           <property name="text">
+	            <string>Medium</string>
+	           </property>
+	           <property name="autoRepeat">
+	            <bool>true</bool>
+	           </property>
+	          </widget>
+	       </item>
+           <item row="0" column="2">
+	          <widget class="QPushButton" name="button_pick_bbox_big">
+	           <property name="sizePolicy">
+	            <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+	             <horstretch>0</horstretch>
+	             <verstretch>0</verstretch>
+	            </sizepolicy>
+	           </property>
+	           <property name="minimumSize">
+	            <size>
+	             <width>0</width>
+	             <height>40</height>
+	            </size>
+	           </property>
+	           <property name="font">
+	            <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>10</pointsize>
+	             <weight>75</weight>
+	             <bold>true</bold>
+	            </font>
+	           </property>
+	           <property name="toolTip">
+	            <string>큰 박스 생성</string>
+	           </property>
+	           <property name="text">
+	            <string>Large</string>
+	           </property>
+	           <property name="autoRepeat">
+	            <bool>true</bool>
+	           </property>
+	          </widget>
+	       </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+   <!-- 박스 생성 끝 -->
+     <item>
        <widget class="QGroupBox" name="bbox_controls">
+        
+
         <property name="font">
+        	  <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>12</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+            <!-- 
          <font>
           <family>DejaVu Sans,Arial</family>
           <weight>75</weight>
           <bold>true</bold>
          </font>
+          -->
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
         </property>
+
         <property name="styleSheet">
          <string notr="true"/>
         </property>
         <property name="title">
-         <string>Bounding Box Controls</string>
+         <string>Bbox Controls</string>
         </property>
         <layout class="QGridLayout" name="gridLayout">
          <item row="0" column="0">
@@ -250,9 +960,18 @@
            <property name="toolTip">
             <string>Move bounding box up. [Q]</string>
            </property>
+           <property name="font">
+	            <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>12</pointsize>
+	             <weight>75</weight>
+	             <bold>true</bold>
+	            </font>
+	           </property>
            <property name="text">
-            <string/>
+            <string>UP</string>
            </property>
+           <!-- 
            <property name="icon">
             <iconset>
              <normaloff>../icons/upload.svg</normaloff>../icons/upload.svg</iconset>
@@ -263,6 +982,7 @@
              <height>25</height>
             </size>
            </property>
+          	 -->
            <property name="autoRepeat">
             <bool>true</bool>
            </property>
@@ -274,7 +994,7 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="2">
+         <item row="2" column="0">
           <widget class="QPushButton" name="button_bbox_down">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
@@ -297,9 +1017,18 @@
            <property name="toolTip">
             <string>Move bounding box down. [E]</string>
            </property>
-           <property name="text">
-            <string/>
+          	           <property name="font">
+	            <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>12</pointsize>
+	             <weight>75</weight>
+	             <bold>true</bold>
+	            </font>
+	           </property>
+          <property name="text">
+            <string>DOWN</string>>
            </property>
+          <!--
            <property name="icon">
             <iconset>
              <normaloff>../icons/download.svg</normaloff>../icons/download.svg</iconset>
@@ -310,6 +1039,7 @@
              <height>25</height>
             </size>
            </property>
+            -->
            <property name="autoRepeat">
             <bool>true</bool>
            </property>
@@ -344,9 +1074,18 @@
            <property name="toolTip">
             <string>Move bounding box right. [D]</string>
            </property>
+           	           <property name="font">
+	            <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>12</pointsize>
+	             <weight>75</weight>
+	             <bold>true</bold>
+	            </font>
+	           </property>
            <property name="text">
-            <string/>
+            <string>RIGHT</string>
            </property>
+           <!-- 
            <property name="icon">
             <iconset>
              <normaloff>../icons/arrow-right-bold.svg</normaloff>../icons/arrow-right-bold.svg</iconset>
@@ -357,6 +1096,7 @@
              <height>30</height>
             </size>
            </property>
+            -->
            <property name="autoRepeat">
             <bool>true</bool>
            </property>
@@ -391,9 +1131,18 @@
            <property name="toolTip">
             <string>Move bounding box left. [A]</string>
            </property>
+           	           <property name="font">
+	            <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>12</pointsize>
+	             <weight>75</weight>
+	             <bold>true</bold>
+	            </font>
+	           </property>
            <property name="text">
-            <string/>
+            <string>LEFT</string>
            </property>
+           <!-- 
            <property name="icon">
             <iconset>
              <normaloff>../icons/arrow-left-bold.svg</normaloff>../icons/arrow-left-bold.svg</iconset>
@@ -404,6 +1153,7 @@
              <height>30</height>
             </size>
            </property>
+            -->
            <property name="autoRepeat">
             <bool>true</bool>
            </property>
@@ -438,6 +1188,18 @@
            <property name="toolTip">
             <string>Move bounding box backward. [W]</string>
            </property>
+           	           <property name="font">
+	            <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>12</pointsize>
+	             <weight>75</weight>
+	             <bold>true</bold>
+	            </font>
+	           </property>
+           <property name="text">
+            <string>BACK</string>
+           </property>
+           <!-- 
            <property name="icon">
             <iconset>
              <normaloff>../icons/arrow-up-bold.svg</normaloff>../icons/arrow-up-bold.svg</iconset>
@@ -448,6 +1210,7 @@
              <height>30</height>
             </size>
            </property>
+            -->
            <property name="autoRepeat">
             <bool>true</bool>
            </property>
@@ -482,9 +1245,18 @@
            <property name="toolTip">
             <string>Move bounding box forward. [S]</string>
            </property>
+           	           <property name="font">
+	            <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>12</pointsize>
+	             <weight>75</weight>
+	             <bold>true</bold>
+	            </font>
+	           </property>
            <property name="text">
-            <string/>
+            <string>FRONT</string>
            </property>
+           <!-- 
            <property name="icon">
             <iconset>
              <normaloff>../icons/arrow-down-bold.svg</normaloff>../icons/arrow-down-bold.svg</iconset>
@@ -495,6 +1267,7 @@
              <height>30</height>
             </size>
            </property>
+            -->
            <property name="autoRepeat">
             <bool>true</bool>
            </property>
@@ -552,6 +1325,7 @@
            </property>
           </widget>
          </item>
+         <!--
          <item row="2" column="0">
           <widget class="QPushButton" name="button_bbox_increase_dimension">
            <property name="sizePolicy">
@@ -595,6 +1369,8 @@
            </property>
           </widget>
          </item>
+         -->
+         <!-- 
          <item row="2" column="2">
           <widget class="QPushButton" name="button_bbox_decrease_dimension">
            <property name="sizePolicy">
@@ -638,9 +1414,11 @@
            </property>
           </widget>
          </item>
+          -->
         </layout>
        </widget>
       </item>
+
       <item>
        <spacer name="verticalSpacer">
         <property name="orientation">
@@ -657,6 +1435,7 @@
         </property>
        </spacer>
       </item>
+      
       <item>
        <widget class="QPushButton" name="button_show_image">
         <property name="sizePolicy">
@@ -698,6 +1477,10 @@
         </property>
        </widget>
       </item>
+      
+
+
+<!-- 
       <item>
        <widget class="QPushButton" name="button_pick_bbox">
         <property name="sizePolicy">
@@ -709,8 +1492,19 @@
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
         </property>
+
+                   <property name="font">
+            <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>12</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+
+
         <property name="text">
-         <string>Pick Bounding Box</string>
+         <string>박스 생성</string>
         </property>
         <property name="icon">
          <iconset>
@@ -739,10 +1533,112 @@
         </property>
        </widget>
       </item>
+  -->
+      <!--
+      <item>
+       <widget class="QPushButton" name="button_pick_bbox_s">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
+        <property name="text">
+         <string>Pick Small Bounding Box</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../icons/cursor-default-click.svg</normaloff>../icons/cursor-default-click.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+        <property name="autoDefault">
+         <bool>false</bool>
+        </property>
+        <property name="default">
+         <bool>false</bool>
+        </property>
+        <property name="flat">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+  -->
+<!-- 
+      <item>
+       <widget class="QPushButton" name="button_one_point">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
+        <property name="text">
+         <string>Pick One Point</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../icons/cursor-default-click.svg</normaloff>../icons/cursor-default-click.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+        <property name="autoDefault">
+         <bool>false</bool>
+        </property>
+        <property name="default">
+         <bool>false</bool>
+        </property>
+        <property name="flat">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+ -->
+
+
+ <!-- 
       <item>
        <widget class="QPushButton" name="button_span_bbox">
+                   <property name="font">
+            <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>12</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           	           <property name="toolTip">
+	            <string></string>
+	           </property>
+	          
         <property name="text">
-         <string>Span Bounding Box</string>
+         <string>박스 그리기</string>
         </property>
         <property name="icon">
          <iconset>
@@ -759,10 +1655,85 @@
         </property>
        </widget>
       </item>
+ -->
+
+      <item>
+       <widget class="QPushButton" name="button_reload">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
+                   <property name="font">
+            <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>12</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+
+        <property name="text">
+         <string>Reload</string>
+        </property>
+        
+        
+        <property name="checkable">
+         <bool>false</bool>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+        <property name="autoDefault">
+         <bool>false</bool>
+        </property>
+        <property name="default">
+         <bool>false</bool>
+        </property>
+        <property name="flat">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+
+      <!-- <item>
+       <widget class="QPushButton" name="button_poly_bbox">
+        <property name="text">
+         <string>Poly Bounding Box</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../icons/resize.svg</normaloff>../icons/resize.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item> -->
+      
       <item>
        <widget class="QPushButton" name="button_save_label">
+                   <property name="font">
+            <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>12</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+
         <property name="text">
-         <string>Save Label</string>
+         <string>Save</string>
         </property>
         <property name="icon">
          <iconset>
@@ -779,6 +1750,7 @@
         </property>
        </widget>
       </item>
+
       <item>
        <spacer name="verticalSpacer_2">
         <property name="orientation">
@@ -797,6 +1769,7 @@
       </item>
      </layout>
     </item>
+
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <property name="sizeConstraint">
@@ -814,6 +1787,7 @@
       </item>
      </layout>
     </item>
+    
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <property name="spacing">
@@ -825,6 +1799,7 @@
       <property name="rightMargin">
        <number>5</number>
       </property>
+      
       <item>
        <widget class="QLabel" name="labels_label">
         <property name="sizePolicy">
@@ -853,6 +1828,7 @@
        </widget>
       </item>
       <item>
+
        <widget class="QFrame" name="frame">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
@@ -893,16 +1869,16 @@
            </property>
           </widget>
          </item>
-          <item>
-              <widget class="QComboBox" name="current_class_dropdown">
-                  <property name="sizePolicy">
-                      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                      </sizepolicy>
-                  </property>
-              </widget>
-          </item>
+         <item>
+          <widget class="QLineEdit" name="edit_current_class">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
+         </item>
          <item>
           <widget class="QLabel" name="current_bbox_title">
            <property name="sizePolicy">
@@ -923,6 +1899,7 @@
            </property>
           </widget>
          </item>
+         
          <item>
           <layout class="QGridLayout" name="bbox_parameter_grid" rowminimumheight="0,0,0,0" columnminimumwidth="0,0,0,0">
            <property name="sizeConstraint">
@@ -1382,7 +2359,10 @@
         </layout>
        </widget>
       </item>
-      <item>
+     
+
+
+     <item>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <property name="topMargin">
          <number>5</number>
@@ -1398,6 +2378,14 @@
           <property name="toolTip">
            <string>Deselect current bounding box.</string>
           </property>
+                     <property name="font">
+            <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>12</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
           <property name="text">
            <string>Deselect</string>
           </property>
@@ -1413,11 +2401,21 @@
           </property>
          </widget>
         </item>
+
         <item>
          <widget class="QPushButton" name="button_delete_label">
           <property name="toolTip">
            <string>Delete current bounding box. [DEL]</string>
           </property>
+                     <property name="font">
+            <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>12</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           	          
           <property name="text">
            <string>Delete</string>
           </property>
@@ -1433,33 +2431,13 @@
           </property>
          </widget>
         </item>
-        <item>
-        <widget class="QPushButton" name="button_assign_label">
-          <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-          </sizepolicy>
-          </property>
-          <property name="toolTip">
-          <string>Assign labels to points inside a box</string>
-          </property>
-          <property name="layoutDirection">
-          <enum>Qt::LeftToRight</enum>
-          </property>
-          <property name="styleSheet">
-          <string notr="true"/>
-          </property>
-          <property name="text">
-          <string>Assign</string>
-          </property>
-          <property name="flat">
-          <bool>false</bool>
-          </property>
-        </widget>
-        </item>
+
        </layout>
       </item>
+
+
+
+
       <item>
        <widget class="QListWidget" name="label_list">
         <property name="sizePolicy">
@@ -1513,6 +2491,317 @@
         </property>
        </widget>
       </item>
+
+
+
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <property name="topMargin">
+         <number>5</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QPushButton" name="button_start">
+          <property name="toolTip">
+           <string>시작할 때</string>
+          </property>
+                     <property name="font">
+            <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>12</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+          <property name="text">
+           <string>START BUTTON</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <property name="topMargin">
+         <number>5</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QPushButton" name="button_finished">
+                     <property name="font">
+            <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>12</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+          <property name="toolTip">
+           <string>FINISHED BUTTON</string>
+          </property>
+          <property name="text">
+           <string>FINISH BUTTON</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+<!-- <item> -->
+
+
+
+	
+          
+     <!--      <layout class="QGridLayout" name="bbox_parameter_grid" rowminimumheight="0,0" columnminimumwidth="0,0">
+
+           <item row="0" column="0">
+	          <widget class="QPushButton" name="button_class1">
+	           <property name="sizePolicy">
+	            <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+	             <horstretch>0</horstretch>
+	             <verstretch>0</verstretch>
+	            </sizepolicy>
+	           </property>
+	           <property name="minimumSize">
+	            <size>
+	             <width>0</width>
+	             <height>40</height>
+	            </size>
+	           </property>
+	           <property name="font">
+	            <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>12</pointsize>
+	             <weight>75</weight>
+	             <bold>true</bold>
+	            </font>
+	           </property>
+	           <property name="toolTip">
+	            <string>Class1</string>
+	           </property>
+	           <property name="text">
+	            <string>바닥</string>
+	           </property>
+	           <property name="autoRepeat">
+	            <bool>true</bool>
+	           </property>
+	          </widget>
+	       </item>
+           
+
+            <item row="0" column="1">
+	          <widget class="QPushButton" name="button_class2">
+	           <property name="sizePolicy">
+	            <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+	             <horstretch>0</horstretch>
+	             <verstretch>0</verstretch>
+	            </sizepolicy>
+	           </property>
+	           <property name="minimumSize">
+	            <size>
+	             <width>0</width>
+	             <height>40</height>
+	            </size>
+	           </property>
+	           <property name="font">
+	            <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>12</pointsize>
+	             <weight>75</weight>
+	             <bold>true</bold>
+	            </font>
+	           </property>
+	           <property name="toolTip">
+	            <string>class2</string>
+	           </property>
+	           <property name="text">
+	            <string>벽</string>
+	           </property>
+	           <property name="autoRepeat">
+	            <bool>true</bool>
+	           </property>
+	          </widget>
+	       </item>
+         
+
+	       <item row="1" column="0">
+	          <widget class="QPushButton" name="button_class4">
+	           <property name="sizePolicy">
+	            <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+	             <horstretch>0</horstretch>
+	             <verstretch>0</verstretch>
+	            </sizepolicy>
+	           </property>
+	           <property name="minimumSize">
+	            <size>
+	             <width>0</width>
+	             <height>40</height>
+	            </size>
+	           </property>
+	           <property name="font">
+	            <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>12</pointsize>
+	             <weight>75</weight>
+	             <bold>true</bold>
+	            </font>
+	           </property>
+	           <property name="toolTip">
+	            <string>class4</string>
+	           </property>
+	           <property name="text">
+	            <string>의자</string>
+	           </property>
+	           <property name="autoRepeat">
+	            <bool>true</bool>
+	           </property>
+	          </widget>
+	       </item>
+
+	       	       <item row="1" column="1">
+	          <widget class="QPushButton" name="button_class5">
+	           <property name="sizePolicy">
+	            <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+	             <horstretch>0</horstretch>
+	             <verstretch>1</verstretch>
+	            </sizepolicy>
+	           </property>
+	           <property name="minimumSize">
+	            <size>
+	             <width>0</width>
+	             <height>40</height>
+	            </size>
+	           </property>
+	           <property name="font">
+	            <font>
+	             <family>DejaVu Sans,Arial</family>
+	             <pointsize>12</pointsize>
+	             <weight>75</weight>
+	             <bold>true</bold>
+	            </font>
+	           </property>
+	           <property name="toolTip">
+	            <string>class5</string>
+	           </property>
+	           <property name="text">
+	            <string>소파</string>
+	           </property>
+	           <property name="autoRepeat">
+	            <bool>true</bool>
+	           </property>
+	          </widget>
+	       </item>
+          </layout>
+         </item> -->
+
+<!-- 
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <property name="topMargin">
+         <number>5</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QPushButton" name="button_fix_perspective">
+          <property name="toolTip">
+           <string>시점을 고정. [시작]</string>
+          </property>
+          <property name="text">
+           <string>시작 / 시점 고정</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item> 
+ -->
+
+      <!-- <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <property name="topMargin">
+         <number>5</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QPushButton" name="button_fix_perspective1">
+          <property name="toolTip">
+           <string>시점1</string>
+          </property>
+          <property name="text">
+           <string>시점1</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <property name="topMargin">
+         <number>5</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QPushButton" name="button_fix_perspective2">
+          <property name="toolTip">
+           <string>시점2</string>
+          </property>
+          <property name="text">
+           <string>시작2</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <property name="topMargin">
+         <number>5</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QPushButton" name="button_fix_perspective3">
+          <property name="toolTip">
+           <string>시점3</string>
+          </property>
+          <property name="text">
+           <string>시작3</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item> -->
+
+
       <item>
        <spacer name="verticalSpacer_3">
         <property name="orientation">
@@ -1546,18 +2835,14 @@
     <property name="title">
      <string>File</string>
     </property>
-    <property name="toolTipsVisible">
-     <bool>true</bool>
-    </property>
     <addaction name="act_set_pcd_folder"/>
     <addaction name="act_set_label_folder"/>
    </widget>
+   
+
    <widget class="QMenu" name="menuLabels">
     <property name="title">
      <string>Labels</string>
-    </property>
-    <property name="toolTipsVisible">
-     <bool>true</bool>
     </property>
     <widget class="QMenu" name="act_set_default_class">
      <property name="title">
@@ -1566,21 +2851,16 @@
     </widget>
     <addaction name="act_set_default_class"/>
     <addaction name="act_delete_all_labels"/>
-    <addaction name="act_propagate_labels"/>
    </widget>
    <widget class="QMenu" name="menuSettings">
     <property name="title">
      <string>Settings</string>
-    </property>
-    <property name="toolTipsVisible">
-     <bool>true</bool>
     </property>
     <addaction name="act_z_rotation_only"/>
     <addaction name="act_show_floor"/>
     <addaction name="act_show_orientation"/>
     <addaction name="act_save_perspective"/>
     <addaction name="act_align_pcd"/>
-    <addaction name="act_color_with_label"/>
     <addaction name="act_change_settings"/>
    </widget>
    <addaction name="menuFile"/>
@@ -1613,34 +2893,23 @@
    <property name="text">
     <string>Z-Rotation Only Mode</string>
    </property>
-   <property name="toolTip">
-    <string>Only allows bounding box rotation around the z-axis.</string>
-   </property>
-  </action>
-  <action name="act_color_with_label">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Color with labels</string>
-   </property>
   </action>
   <action name="act_delete_all_labels">
    <property name="text">
     <string>Delete All Current Labels</string>
    </property>
   </action>
-  <action name="act_set_std_dimensions">
+  <action name="action_setstddimensions">
    <property name="text">
     <string>Set Default Bounding Box Dimensions ...</string>
    </property>
   </action>
-  <action name="act_set_std_transformations">
+  <action name="action_setstdtransformations">
    <property name="text">
     <string>Set Default Transformation Steps …</string>
    </property>
   </action>
-  <action name="act_point_size">
+  <action name="action_pointsize">
    <property name="text">
     <string>Point Size</string>
    </property>
@@ -1654,9 +2923,6 @@
    </property>
    <property name="text">
     <string>Show Floor</string>
-   </property>
-   <property name="toolTip">
-    <string>Shows a grid along the x-y-plane (z=0).</string>
    </property>
   </action>
   <action name="act_show_orientation">
@@ -1680,10 +2946,6 @@
    <property name="text">
     <string>Keep Perspective</string>
    </property>
-   <property name="toolTip">
-    <string>Saves the last perspective and reuses it,
-when opening that point cloud again.</string>
-   </property>
   </action>
   <action name="act_align_pcd">
    <property name="checkable">
@@ -1694,9 +2956,6 @@ when opening that point cloud again.</string>
    </property>
    <property name="text">
     <string>Align Point Cloud</string>
-   </property>
-   <property name="toolTip">
-    <string>Transforms the point cloud so that the floor is the x-y-plane.</string>
    </property>
   </action>
   <action name="act_change_settings">
@@ -1709,19 +2968,9 @@ when opening that point cloud again.</string>
     <string>test</string>
    </property>
   </action>
-  <action name="act_propagate_labels">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Propagate Labels</string>
-   </property>
-   <property name="toolTip">
-    <string>Propagate Labels to the next Point Cloud
-if it does not have labels yet.</string>
-   </property>
-  </action>
  </widget>
+
+
  <customwidgets>
   <customwidget>
    <class>GLWidget</class>
@@ -1729,6 +2978,7 @@ if it does not have labels yet.</string>
    <header>labelCloud.view.viewer</header>
   </customwidget>
  </customwidgets>
+
  <tabstops>
   <tabstop>button_prev_pcd</tabstop>
   <tabstop>button_next_pcd</tabstop>
@@ -1738,14 +2988,22 @@ if it does not have labels yet.</string>
   <tabstop>button_bbox_forward</tabstop>
   <tabstop>button_bbox_up</tabstop>
   <tabstop>button_bbox_down</tabstop>
-  <tabstop>button_bbox_increase_dimension</tabstop>
-  <tabstop>button_bbox_decrease_dimension</tabstop>
+  
+  <!--<tabstop>button_bbox_increase_dimension</tabstop>
+  <tabstop>button_bbox_decrease_dimension</tabstop>-->
   <tabstop>dial_bbox_z_rotation</tabstop>
   <tabstop>button_show_image</tabstop>
-  <tabstop>button_pick_bbox</tabstop>
-  <tabstop>button_span_bbox</tabstop>
+  <tabstop>button_reload</tabstop>
+  <!-- <tabstop>button_pick_bbox</tabstop> -->
+  <tabstop>button_pick_bbox_small</tabstop>
+  <tabstop>button_pick_bbox_mid</tabstop>
+  <tabstop>button_pick_bbox_big</tabstop>
+  <!-- <tabstop>button_pick_bbox_s</tabstop> -->
+  <!-- <tabstop>button_one_point</tabstop> -->
+  <!-- <tabstop>button_span_bbox</tabstop> -->
+  <!-- <tabstop>button_poly_bbox</tabstop> -->
   <tabstop>button_save_label</tabstop>
-  <tabstop>current_class_dropdown</tabstop>
+  <tabstop>edit_current_class</tabstop>
   <tabstop>edit_pos_x</tabstop>
   <tabstop>edit_pos_y</tabstop>
   <tabstop>edit_pos_z</tabstop>
@@ -1757,8 +3015,35 @@ if it does not have labels yet.</string>
   <tabstop>edit_rot_z</tabstop>
   <tabstop>button_deselect_label</tabstop>
   <tabstop>button_delete_label</tabstop>
-  <tabstop>button_assign_label</tabstop>
+  <!-- <tabstop>button_transparency</tabstop> -->
+  <!-- <tabstop>button_fix_perspective</tabstop> -->
+  <!-- <tabstop>button_fix_perspective1</tabstop>
+  <tabstop>button_fix_perspective2</tabstop>
+  <tabstop>button_fix_perspective3</tabstop> -->
   <tabstop>label_list</tabstop>
+  <tabstop>button_start</tabstop>
+  <tabstop>button_finished</tabstop>
+
+
+  <tabstop>button_class1</tabstop>
+  <tabstop>button_class2</tabstop>
+  <tabstop>button_class3</tabstop>
+  <tabstop>button_class4</tabstop>
+  <tabstop>button_class5</tabstop>
+  <tabstop>button_class6</tabstop>
+  <tabstop>button_class7</tabstop>
+  <tabstop>button_class8</tabstop>
+  <tabstop>button_class9</tabstop>
+  <tabstop>button_class10</tabstop>
+  <tabstop>button_class11</tabstop>
+  <tabstop>button_class12</tabstop>
+<!-- 
+  <tabstop>button_class5</tabstop>
+  <tabstop>button_class6</tabstop>
+  <tabstop>button_class7</tabstop>
+  <tabstop>button_class8</tabstop>
+  <tabstop>button_class9</tabstop>
+ -->
  </tabstops>
  <resources/>
  <connections/>

@@ -1,0 +1,3 @@
+cd labelCloud\labelCloud_0423\labelCloud
+conda activate labelCloud
+python labelCloud.py -i=P1 -c=A0 >> ./test.txt 

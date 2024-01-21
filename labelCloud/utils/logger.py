@@ -2,7 +2,6 @@ import logging
 import re
 import shutil
 from enum import Enum
-from functools import lru_cache
 from typing import List
 
 # --------------------------------- FORMATTING -------------------------------- #
@@ -107,20 +106,15 @@ def end_section() -> None:
     pass
 
 
-ROWS: List[List[str]] = []
+rows = []
 
 
 def print_column(column_values: List[str], last: bool = False) -> None:
-    global ROWS
-    ROWS.append(column_values)
+    global rows
+    rows.append(column_values)
 
     if last:
-        col_width = max(len(str(word)) for row in ROWS for word in row) + 2  # padding
-        for row in ROWS:
+        col_width = max(len(str(word)) for row in rows for word in row) + 2  # padding
+        for row in rows:
             logging.info("".join(str(word).ljust(col_width) for word in row))
-        ROWS = []
-
-
-@lru_cache(maxsize=None)
-def warn_once(*args, **kwargs):
-    logging.warning(*args, **kwargs)
+        rows = []

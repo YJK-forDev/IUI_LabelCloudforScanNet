@@ -18,6 +18,7 @@ if TYPE_CHECKING:
 
 class AlignMode(object):
     def __init__(self, pcd_manager: PointCloudManger) -> None:
+        #logging.info("alignmode.py AlignMode init...")
         self.pcd_manager = pcd_manager
         self.view: GUI
         self.is_active = False
@@ -52,7 +53,7 @@ class AlignMode(object):
         self.view.activate_draw_modes(
             not self.is_active
         )  # Prevent bbox drawing while aligning
-        logging.info(f"Alignmode was changed to {self.is_active}!")
+        #logging.info(f"Alignmode was changed to {self.is_active}!")
 
     def reset(self, points_only: bool = False) -> None:
         self.plane1, self.plane2, self.plane3 = (None, None, None)
@@ -127,10 +128,12 @@ class AlignMode(object):
         rotation_axis = np.cross(pn_normalized, z_axis) / np.linalg.norm(
             np.cross(pn_normalized, z_axis)
         )
+        """
         logging.info(
             f"Alignment rotation: {round(rotation_angle, 2)} "
             f"around {np.round(rotation_axis, 2)}"
         )
+        """
 
         # Initiate point cloud rotation
         self.pcd_manager.rotate_pointcloud(rotation_axis, rotation_angle, self.plane1)
